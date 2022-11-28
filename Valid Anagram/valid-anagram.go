@@ -25,10 +25,10 @@ package leetcode
 var ch1 = make(chan map[rune]int, 2)
 
 func isAnagram(s string, t string) bool {
-    if len(s) != len(t){
-        return false
-    }
-	
+	if len(s) != len(t) {
+		return false
+	}
+
 	go buildMap(s)
 	go buildMap(t)
 
@@ -38,17 +38,16 @@ func isAnagram(s string, t string) bool {
 	for i, v := range s1 {
 		if v != s2[i] {
 			return false
-		} 
+		}
 	}
 	return true
 }
 
-func buildMap(s string){
+func buildMap(s string) {
 	m := make(map[rune]int)
 
-    for _, v := range s{
-		
-			m[v] += 1
+	for _, v := range s {
+		m[v] += 1
 	}
-	ch1<- m
+	ch1 <- m
 }
