@@ -32,7 +32,7 @@ package leetcode
 //     -1000 <= targetSum <= 1000
 
 //   Definition for a binary tree node.
-  type TreeNode struct {
+ type TreeNode struct {
       Val int
       Left *TreeNode
       Right *TreeNode
@@ -43,30 +43,41 @@ package leetcode
 		return false
 	}
 
+    if root.Left == nil && root.Right == nil{
+        if root.Val != targetSum {
+            return false
+        }
+        return true
+    }
+
 	return helper(root, targetSum)
 }
 
 
 func helper(root *TreeNode, targetSum int) bool {
 	if root == nil {
-		return targetSum == 0
-	}
+        return false
+    }
 
-	if root.Left == nil && root.Right == nil {
-		return root.Val == targetSum
-	}
+    if root.Left == nil && root.Right == nil{
+        
+        if root.Val == targetSum{
+            return true
+        }
+        return false
+    }
 
-	if root.Left == nil {
-        targetSum = targetSum-root.Val
-		return helper(root.Right, targetSum)
-	}
+    targetSum = targetSum - root.Val
 
-	if root.Right == nil {
-        targetSum = targetSum-root.Val
-		return helper(root.Left, targetSum)
-	}
+    if helper(root.Left, targetSum) {
+        return true
+    }
+    
+    
+     if helper(root.Right, targetSum) {
+         return true
+     }
+   
 
-    targetSum = targetSum-root.Val
-
-	return helper(root.Left, targetSum) || helper(root.Right, targetSum)
+    return false
 }
